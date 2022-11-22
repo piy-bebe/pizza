@@ -1,6 +1,16 @@
 import React from 'react'
 
+const data = ['популярности', 'цене', 'алфавиту']
+
 const Sort = () => {
+  const [active, setActive] = React.useState(false)
+  const [category, setCategory] = React.useState(data[1])
+
+  const onCategory = (name) => {
+    setActive(false)
+    setCategory(name)
+  }
+
   return (
     <div class="sort">
       <div class="sort__label">
@@ -10,16 +20,20 @@ const Sort = () => {
             fill="#2C2C2C"
           />
         </svg>
-        <b>Сортировка по:</b>
-        <span>популярности</span>
+        <b onClick={() => setActive(!active)}>Сортировка по:</b>
+        <span>{category}</span>
       </div>
-      <div class="sort__popup">
-        <ul>
-          <li class="active">популярности</li>
-          <li>цене</li>
-          <li>алфавиту</li>
-        </ul>
-      </div>
+      {active && (
+        <div class="sort__popup">
+          <ul>
+            {data.map((name, id) => (
+              <li onClick={() => onCategory(name)} key={id}>
+                {name}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
     </div>
   )
 }
